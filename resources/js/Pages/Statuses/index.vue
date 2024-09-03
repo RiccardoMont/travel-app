@@ -17,12 +17,12 @@
         <input id="title" name="title" type="text" v-model="form.title">
 
         <button type="submit">Add</button>
-        
+
     </form>
 
     <div v-if="$page.props.flash.message">
-            {{ $page.props.flash.message }}
-        </div>
+        {{ $page.props.flash.message }}
+    </div>
 </template>
 <script>
 import { useForm } from '@inertiajs/vue3';

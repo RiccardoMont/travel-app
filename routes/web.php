@@ -23,6 +23,10 @@ Route::get('/statuses', function () {
     return Inertia::render('Statuses/index');
 })->name('statuses');
 
+Route::get('/maptest', function () {
+    return Inertia::render('MapTest');
+})->name('maptest');
+
 Route::resource('statuses', StatusController::class);
 
 Route::middleware('auth')->group(function () {
