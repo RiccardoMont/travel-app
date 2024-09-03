@@ -23,9 +23,9 @@ Route::get('/statuses', function () {
     return Inertia::render('Statuses/index');
 })->name('statuses');
 
-Route::get('/maptest', function () {
+/*Route::get('/maptest', function () {
     return Inertia::render('MapTest');
-})->name('maptest');
+})->name('maptest');*/
 
 Route::resource('statuses', StatusController::class);
 
@@ -33,6 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    
+    Route::get('/maptest', function () {
+        return Inertia::render('MapTest');
+    })->name('maptest');
 });
 
 require __DIR__.'/auth.php';

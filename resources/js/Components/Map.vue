@@ -39,7 +39,8 @@ onMounted(() => {
 
     map.addEventListener('click', (e) => {
         const { lat: latitude, lng: longitude } = e.latlng;
-
+        console.log({ lat: latitude, lng: longitude });
+        console.log(typeof({ lat: latitude, lng: longitude }));
         //Rimuovo il marker precedente se esiste
         if (currentMarker) {
             map.removeLayer(currentMarker);
