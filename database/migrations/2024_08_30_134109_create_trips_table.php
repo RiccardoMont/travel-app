@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
+            $table->string('image')->nullable();
             $table->date('start')->nullable();
             $table->date('end')->nullable();
             $table->text('description')->nullable();
