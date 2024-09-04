@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title', 255);
             $table->date('start')->nullable();
             $table->date('end')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('price')->nullable();
+            $table->boolean('public');
             $table->timestamps();
         });
     }

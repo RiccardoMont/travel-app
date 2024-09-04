@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('title', 200);
             $table->string('image')->nullable();
             $table->text('description')->nullable();
+            $table->integer('price')->nullable();
             $table->smallInteger('rating')->nullable();
             $table->decimal('lat', total: 8, places:5)->nullable();
             $table->decimal('lng', total: 8, places:5)->nullable();
             $table->timestamp('date_and_hour')->nullable();
             $table->boolean('checked')->nullable();
+            $table->boolean('public');
             $table->timestamps();
         });
     }

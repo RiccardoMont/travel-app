@@ -38,6 +38,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/maptest', function () {
         return Inertia::render('MapTest');
     })->name('maptest');
+
+    Route::get('/trips', function() {
+        return Inertia::render('Trips/index');
+    })->name('trips');
+
+    Route::get('/stops', function() {
+        return Inertia::render('Stops/index');
+    })->name('stops');
 });
 
 require __DIR__.'/auth.php';
