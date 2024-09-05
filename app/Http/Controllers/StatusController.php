@@ -16,9 +16,11 @@ class StatusController extends Controller
     {
         $statuses = Status::all();
 
-        return Inertia::render('Statuses/index', [
+        return Inertia::render('statuses/index');
+
+        /*return Inertia::render('Statuses/index', [
             'statuses' => $statuses
-        ]);
+        ]);*/
     }
 
     /**

@@ -1,14 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import NewTrip from '@/Components/NewTrip.vue';
-import { onMounted } from 'vue';
-import { initFlowbite } from 'flowbite';
 
-//reinizializzo i componenti altrimenti il bottone non trigghera la modale
-onMounted(() => {
-    initFlowbite();
-})
 
 </script>
 <template>
@@ -26,8 +19,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" id="button-modal" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Modal</button>
-       <NewTrip />
+        
     </AuthenticatedLayout>
 </template>
 

@@ -11,7 +11,7 @@ class Trip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'start', 'end', 'status_id'];
+    protected $fillable = ['title', 'image', 'start', 'end', 'description', 'price', 'public', 'status_id'];
 
     public function status() : BelongsTo
     {

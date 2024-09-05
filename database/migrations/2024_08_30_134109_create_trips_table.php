@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('end')->nullable();
             $table->text('description')->nullable();
             $table->integer('price')->nullable();
-            $table->boolean('public');
+            $table->boolean('public')->nullable();
             $table->timestamps();
         });
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Trip;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class TripController extends Controller
 {
@@ -13,7 +15,10 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
+        //return view('Trips.index');
+        
+        return Inertia::render('trips/index');
+
     }
 
     /**
@@ -29,7 +34,15 @@ class TripController extends Controller
      */
     public function store(StoreTripRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        
+        
+
+        $trip = Trip::create($validated);
+
+        return to_route('trips.index');
+    
     }
 
     /**

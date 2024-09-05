@@ -1,6 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import NewTrip from '@/Components/NewTrip.vue';
+/*import { inject } from "vue";
+
+const route = inject("route");*/
 </script>
 <template>
     <Head title="Trips" />
@@ -17,8 +21,7 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-        <h3>
-            prova
-        </h3>
+        
+       <NewTrip />
     </AuthenticatedLayout>
 </template>

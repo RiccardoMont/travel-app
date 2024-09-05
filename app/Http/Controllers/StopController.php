@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Stop;
 use App\Http\Requests\StoreStopRequest;
 use App\Http\Requests\UpdateStopRequest;
+use Inertia\Inertia;
 
 class StopController extends Controller
 {
@@ -13,7 +14,7 @@ class StopController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('stops/index');
     }
 
     /**

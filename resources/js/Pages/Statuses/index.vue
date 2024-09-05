@@ -1,3 +1,26 @@
+<script>
+import { useForm } from '@inertiajs/vue3';
+
+export default {
+    props: {
+        statuses: Array
+    },
+    setup() {
+        const form = useForm({
+            title: ''
+        });
+
+        function submit() {
+
+            form.post(route('statuses.store'));
+
+        }
+
+        return { form, submit };
+    }
+}
+</script>
+
 <template>
     <div>
         <h1>This is the Test Page</h1>
@@ -24,25 +47,3 @@
         {{ $page.props.flash.message }}
     </div>
 </template>
-<script>
-import { useForm } from '@inertiajs/vue3';
-
-export default {
-    props: {
-        statuses: Array
-    },
-    setup() {
-        const form = useForm({
-            title: ''
-        });
-
-        function submit() {
-
-            form.post(route('statuses.store'));
-
-        }
-
-        return { form, submit };
-    }
-}
-</script>

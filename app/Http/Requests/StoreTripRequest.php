@@ -11,7 +11,7 @@ class StoreTripRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreTripRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required',
+            'image' => 'nullable|image|max:2048',
+            'start' => 'nullable',
+            'end' => 'nullable',
+            'description' => 'nullable',
+            'price' => 'nullable',
+            'public' => 'nullable',
+            'status_id' => 'exists:statuses,id'
+
         ];
     }
 }
