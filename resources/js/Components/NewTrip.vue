@@ -42,7 +42,6 @@ const form = useForm({
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <!--<form @submit.prevent="submit" class="space-y-4" enctype="multipart/form-data">-->
                     <form @submit.prevent="form.post(route('trips.store'))" class="space-y-4" enctype="multipart/form-data">
                         <div>
                             <label for="title"

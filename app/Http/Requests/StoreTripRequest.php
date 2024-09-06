@@ -29,7 +29,7 @@ class StoreTripRequest extends FormRequest
             'description' => 'nullable',
             'price' => 'nullable',
             'public' => 'nullable',
-            'status_id' => 'exists:statuses,id'
+            'status_id' => 'exists:statuses,id',
 
         ];
     }

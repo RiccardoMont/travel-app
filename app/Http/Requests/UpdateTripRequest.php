@@ -11,7 +11,7 @@ class UpdateTripRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateTripRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'nullable',
+            'image' => 'nullable|image|max:2048',
+            'start' => 'nullable',
+            'end' => 'nullable',
+            'description' => 'nullable',
+            'price' => 'nullable',
+            'public' => 'nullable',
+            'status_id' => 'exists:statuses,id'
         ];
     }
 }

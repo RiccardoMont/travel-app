@@ -2,12 +2,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import NewTrip from '@/Components/NewTrip.vue';
-import { onMounted } from 'vue';
-import { stringify } from 'postcss';
+import EditTrip from "@/Components/EditTrip.vue";
 
 const props = defineProps({
-
-    trips: Array
+    trips: Array,
+    statuses: Array,
+    old: Object
 });
 
 
@@ -40,7 +40,8 @@ const props = defineProps({
                     </a>
                     <div class="flex">
                         <i class="fa-solid fa-signs-post px-2"></i>
-                        <i class="fa-solid fa-pencil px-2"></i>
+                        <i :data-modal-target="'edit-trip-modal-' + trip.id " :data-modal-toggle="'edit-trip-modal-' + trip.id " type="button" class="fa-solid fa-pencil px-2"></i>
+                        <EditTrip :trip="trip" :statuses="statuses" :old="old" />
                         <i class="fa-solid fa-trash px-2"></i>
                     </div>
                 </div>

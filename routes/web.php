@@ -21,13 +21,6 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-/*Route::get('/statuses', function () {
-    return Inertia::render('Statuses/index');
-})->name('statuses');*/
-
-//Route::resource('statuses', StatusController::class);
-
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -35,27 +28,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('MapTest');
     })->name('maptest');
 
-    /*Route::get('/statuses', function () {
-        return Inertia::render('Statuses/index');
-    })->name('statuses');*/
-
-    /*Route::get('/trips', function() {
-        return Inertia::render('Trips/index');
-    })->name('trips');*/
+    //Laravel non supporta il caricamento delle immagini tramite il metodo put/patch e sfrutto quindi il metodo POST sulla rotta dell'update. La dichiaro prima in modo da privilegiare questa rotta e non quella creata con il resource.
+    Route::post('trips/{trip}', [TripController::class, 'update']);
 
     Route::resource('trips', TripController::class);
 
     Route::resource('stops', StopController::class);
-
-    /*Route::get('/trips', [TripController::class, 'index'])->name('trips.index');
-
-    Route::post('/trips', [TripController::class, 'store'])->name('trips.store');*/
-
-
-
-    /*Route::get('/stops', function() {
-        return Inertia::render('Stops/index');
-    })->name('stops');*/
 
 });
 

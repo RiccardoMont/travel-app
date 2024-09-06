@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Trip;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
+use App\Models\Status;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -18,15 +20,19 @@ class TripController extends Controller
     public function index()
     {
         $trips = Trip::all();
+        $statuses = Status::all();
 
         //dd($trips);
-        
-        return Inertia::render('trips/index', compact('trips'));
+
+        return Inertia::render('trips/index', [
+            'trips' => $trips,
+            'statuses' => $statuses,
+            'old' => old()
+        ]);
 
         /*return Inertia::render('trips/index', [
             'trips' => $trips
         ]);*/
-
     }
 
     /**
@@ -42,9 +48,10 @@ class TripController extends Controller
      */
     public function store(StoreTripRequest $request)
     {
+
         $validated = $request->validated();
-        
-        if($request->has('image')){
+
+        if ($request->image !== null) {
 
             $manager = new ImageManager(new Driver());
 
@@ -57,15 +64,16 @@ class TripController extends Controller
             $img->toJpeg()->save($destination . '/' . $name_gen);
 
             $validated['image'] = 'uploads/' . $name_gen;
-
         }
 
-        //$validated[''] = $request->
+        //Segna errore ma in realtà riesce a prenderlo
+        $validated['user_id'] = auth()->id();
+
+        //dd($validated['user_id']);
 
         $trip = Trip::create($validated);
 
         return to_route('trips.index');
-    
     }
 
     /**
@@ -89,7 +97,49 @@ class TripController extends Controller
      */
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        //
+
+        if (auth()->id() != $trip->user_id) {
+            abort(403, 'Access denied');
+        }
+
+        $validated = $request->validated();
+
+        //dd($request->all());
+        //Gestisco l'immagine nel caso mi arrivi un valore nullo capace di sovrascrivere la mia ultima immagine dal useform
+        if ($request->image == null) {
+
+            unset($validated['image']);
+
+        } else {
+
+            if ($trip->image) {
+
+                Storage::delete($trip->image);
+            }
+
+            $manager = new ImageManager(new Driver());
+
+            $name_gen = hexdec(uniqid()) . '.' . 'jpeg';
+
+            $img = $manager->read($request->file('image')->getRealPath());
+
+            $destination = storage_path('app/public/uploads');
+
+            $img->toJpeg()->save($destination . '/' . $name_gen);
+
+            $validated['image'] = 'uploads/' . $name_gen;
+        }
+
+
+        //Assegno lo status
+        $validated['status_id'] = $request->status;
+
+        //dd($validated['status_id']);
+
+        $trip->update($validated);
+
+
+        return to_route('trips.index');
     }
 
     /**
