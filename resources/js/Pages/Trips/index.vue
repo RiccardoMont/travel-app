@@ -2,11 +2,20 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import NewTrip from '@/Components/NewTrip.vue';
-/*import { inject } from "vue";
+import { onMounted } from 'vue';
+import { stringify } from 'postcss';
 
-const route = inject("route");*/
+const props = defineProps({
+
+    trips: Array
+});
+
+
+
+
 </script>
 <template>
+
     <Head title="Trips" />
 
     <AuthenticatedLayout>
@@ -14,14 +23,30 @@ const route = inject("route");*/
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">My Trips</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+
+        <h3>List of trips:</h3>
+
+        <div class="flex flex-wrap">
+            <div v-for="trip in trips" :key="trip.id"
+                class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <img v-if="trip.image !== null" :src="'storage/' + trip.image" alt="">
+                </a>
+                <div class="p-5 flex justify-between">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ trip.title
+                            }}
+                        </h5>
+                    </a>
+                    <div class="flex">
+                        <i class="fa-solid fa-signs-post px-2"></i>
+                        <i class="fa-solid fa-pencil px-2"></i>
+                        <i class="fa-solid fa-trash px-2"></i>
+                    </div>
                 </div>
             </div>
         </div>
-        
-       <NewTrip />
+
+        <NewTrip />
     </AuthenticatedLayout>
 </template>

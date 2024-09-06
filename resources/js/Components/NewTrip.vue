@@ -2,40 +2,17 @@
 import { useForm } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
-import { reactive } from 'vue';
-import { router } from '@inertiajs/vue3';
 
 //reinizializzo i componenti altrimenti il bottone non trigghera la modale
 onMounted(() => {
     initFlowbite();
 })
 
-/*const form = reactive({
-    title: null
-})*/
-
 const form = useForm({
-    title: ''
+    title: '',
+    image: '',
+    public: ''
 });
-
-function submit() {
-    console.log('submittato');
-    console.log(form);
-    router.post('/trips', form)
-}
-
-/*
-
-function send() {
-    console.log(form);
-    form.post(route('trips.store'));
-
-}*/
-
-//return { form, submit };
-
-
-
 
 </script>
 <template>
@@ -78,11 +55,11 @@ function send() {
                             <label for="image"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover
                                 Image</label>
-                            <input type="file" name="image" id="image"
+                            <input type="file" @input="form.image = $event.target.files[0]" name="image" id="image"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                         </div>
                         <div class="d-flex items-center">
-                            <input id="public" type="checkbox" value=""
+                            <input id="public" type="checkbox" value="true" v-model="form.public"
                                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
                             <label for="public" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Do you
                                 want make this Trip Public?</label>

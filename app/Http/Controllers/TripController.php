@@ -7,6 +7,8 @@ use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class TripController extends Controller
 {
@@ -15,9 +17,15 @@ class TripController extends Controller
      */
     public function index()
     {
-        //return view('Trips.index');
+        $trips = Trip::all();
+
+        //dd($trips);
         
-        return Inertia::render('trips/index');
+        return Inertia::render('trips/index', compact('trips'));
+
+        /*return Inertia::render('trips/index', [
+            'trips' => $trips
+        ]);*/
 
     }
 
@@ -35,9 +43,24 @@ class TripController extends Controller
     public function store(StoreTripRequest $request)
     {
         $validated = $request->validated();
+        
+        if($request->has('image')){
 
-        
-        
+            $manager = new ImageManager(new Driver());
+
+            $name_gen = hexdec(uniqid()) . '.' . 'jpeg';
+
+            $img = $manager->read($request->file('image')->getRealPath());
+
+            $destination = storage_path('app/public/uploads');
+
+            $img->toJpeg()->save($destination . '/' . $name_gen);
+
+            $validated['image'] = 'uploads/' . $name_gen;
+
+        }
+
+        //$validated[''] = $request->
 
         $trip = Trip::create($validated);
 
