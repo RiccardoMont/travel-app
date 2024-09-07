@@ -81,7 +81,9 @@ class TripController extends Controller
      */
     public function show(Trip $trip)
     {
-        //
+
+        return Inertia::render('trips/show', compact('trip'));
+
     }
 
     /**
@@ -147,6 +149,18 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        //
+        
+
+        if (auth()->id() != $trip->user_id) {
+            abort(403, 'Access denied');
+        }
+
+        if ($trip->image) {
+            Storage::delete($trip->image);
+        }
+
+        $trip->delete();
+
+        return to_route('trips.index');
     }
 }

@@ -1,6 +1,12 @@
 <script setup>
-
 import { useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
+import { initFlowbite } from 'flowbite';
+
+//reinizializzo i componenti altrimenti il bottone non trigghera la modale appena crea il nuovo elemento
+onMounted(() => {
+    initFlowbite();
+})
 
 const props = defineProps({
     trip: Object,

@@ -1,8 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import NewTrip from '@/Components/NewTrip.vue';
 import EditTrip from "@/Components/EditTrip.vue";
+import DeleteTrip from "@/Components/DeleteTrip.vue";
 
 const props = defineProps({
     trips: Array,
@@ -39,10 +41,10 @@ const props = defineProps({
                         </h5>
                     </a>
                     <div class="flex">
-                        <i class="fa-solid fa-signs-post px-2"></i>
+                        <Link :href="route('trips.show', trip.id)"><i class="fa-solid fa-signs-post px-2"></i></Link>
                         <i :data-modal-target="'edit-trip-modal-' + trip.id " :data-modal-toggle="'edit-trip-modal-' + trip.id " type="button" class="fa-solid fa-pencil px-2"></i>
                         <EditTrip :trip="trip" :statuses="statuses" :old="old" />
-                        <i class="fa-solid fa-trash px-2"></i>
+                        <DeleteTrip :trip="trip" />
                     </div>
                 </div>
             </div>
