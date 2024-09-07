@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import NewStop from '@/Components/NewStop.vue';
 
 
 const props = defineProps({
@@ -21,6 +22,9 @@ const props = defineProps({
         </template>
 
         <p>stops</p>
+
+        <NewStop/>
+        
 
       
     </AuthenticatedLayout>

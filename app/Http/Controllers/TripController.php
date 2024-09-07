@@ -149,7 +149,6 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        
 
         if (auth()->id() != $trip->user_id) {
             abort(403, 'Access denied');
