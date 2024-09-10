@@ -2,6 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
+import Map from './Map.vue';
 
 //reinizializzo i componenti altrimenti il bottone non trigghera la modale
 onMounted(() => {
@@ -12,10 +13,19 @@ const form = useForm({
     title: '',
     image: '',
     datetime: '',
+    lat: '',
+    lng: '',
+    price: '',
     checked: '',
     public: ''
 });
 
+function get_lat_and_lng(coords) {
+    form.lat = coords.latitude;
+    form.lng = coords.longitude;
+    console.log(form.lat);
+    console.log(form.lng);
+}
 
 </script>
 <template>
@@ -71,10 +81,21 @@ const form = useForm({
                                     class="border border-gray-300 rounded-lg p-2">
                             </div>
                         </div>
+                        <Map @get_lat_and_lng="get_lat_and_lng" />
+                            <input type="hidden" id="latitude" v-model="form.lat" />
+                            <input type="hidden" id="longitude" v-model="form.lng"  />
+                        <div>
+                            <label for="price"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                            <input v-model="form.price" type="string" name="price" id="price"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="$2999">
+                        </div>
                         <div class="d-flex items-center">
                             <input id="checked" type="checkbox" value="true" v-model="form.checked"
                                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
-                            <label for="checked" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Done! It's time for the next stop!</label>
+                            <label for="checked" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Done!
+                                It's time for the next stop!</label>
                         </div>
                         <div class="d-flex items-center">
                             <input id="public" type="checkbox" value="true" v-model="form.public"
