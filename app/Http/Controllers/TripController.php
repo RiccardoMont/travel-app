@@ -6,6 +6,7 @@ use App\Models\Trip;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
 use App\Models\Status;
+use App\Models\Stop;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -69,8 +70,6 @@ class TripController extends Controller
         //Segna errore ma in realtà riesce a prenderlo
         $validated['user_id'] = auth()->id();
 
-        //dd($validated['user_id']);
-
         $trip = Trip::create($validated);
 
         return to_route('trips.index');
@@ -82,7 +81,11 @@ class TripController extends Controller
     public function show(Trip $trip)
     {
 
-        return Inertia::render('trips/show', compact('trip'));
+        $statuses = Status::all();
+
+        $stops = Stop::where('trip_id', '=', $trip->id)->get();
+
+        return Inertia::render('trips/show', compact('trip', 'statuses', 'stops'));
 
     }
 

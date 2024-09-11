@@ -185,8 +185,6 @@ input[type=radio] {
     color: rgb(178, 152, 4);
 }
 
-.fa-star {}
-
 
 input[type=radio]:focus+label {
     outline: 2px dotted black;

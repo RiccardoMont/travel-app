@@ -9,7 +9,7 @@ onMounted(() => {
 })
 
 const props = defineProps({
-    trip: Object,
+    stop_trip: Object,
 });
 
 const form = useForm({

@@ -19,11 +19,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('price')->nullable();
             $table->smallInteger('rating')->nullable();
-            $table->decimal('lat', total: 8, places:5)->nullable();
-            $table->decimal('lng', total: 8, places:5)->nullable();
+            $table->decimal('lat', total: 9, places:6)->nullable();
+            $table->decimal('lng', total: 9, places:6)->nullable();
             $table->timestamp('date_and_hour')->nullable();
-            $table->boolean('checked')->nullable();
-            $table->boolean('public');
+            $table->boolean('public')->nullable();
             $table->timestamps();
         });
     }

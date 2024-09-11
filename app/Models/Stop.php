@@ -10,12 +10,18 @@ class Stop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'description', 'rating', 'lat', 'lng', 'date_and_hour', 'checked', 'trip_id'];
+    protected $fillable = ['title', 'image', 'description', 'rating', 'lat', 'lng', 'date_and_hour', 'checked', 'user_id', 'trip_id', 'status_id'];
 
     public function trip() : BelongsTo
     {
 
         return $this->belongsTo(Trip::class);
+
+    }
+    public function status() : BelongsTo
+    {
+
+        return $this->belongsTo(Status::class);
 
     }
 }

@@ -9,6 +9,11 @@ onMounted(() => {
     initFlowbite();
 })
 
+const props = defineProps({
+    trip: Object,
+    statuses: Object
+});
+
 const form = useForm({
     title: '',
     image: '',
@@ -16,15 +21,80 @@ const form = useForm({
     lat: '',
     lng: '',
     price: '',
-    checked: '',
-    public: ''
+    rating: '',
+    status: '',
+    public: '',
+    //Passo il valore trip id per poi reindirizzare alla pagina trips.show
+    trip_id: props.trip.id
 });
 
+//FUNZIONE PER L'EMIT CHE RACCOGLIE LE COORDINATE DAL COMPONENTE
 function get_lat_and_lng(coords) {
     form.lat = coords.latitude;
     form.lng = coords.longitude;
     console.log(form.lat);
     console.log(form.lng);
+}
+
+//GESTIONE DELLE STELLE
+window.onload = function () {
+
+//Prendo in riferimento .rating altrimenti tutte le altre label del form verrebbero selezionate
+const rating = document.querySelector('.rating');
+// Seleziono tutti i label (o box)
+const labels = rating.querySelectorAll('label');
+//Variabile di supporto per vedere quale stella sia stata cliccata
+let selectedIndex = -1;
+
+//Ciclo nelle labels
+labels.forEach((label, index) => {
+    // Aggiungo l'hover
+    label.addEventListener('mouseenter', () => {
+        //console.log(label, index);
+        //Nascondo le stelle regular e mostro le solid, tutte a partire da sinistra fino al punto scelto
+        //Parto da i = 4 perché le precedenti label inficiano l'index del querySelectoAll
+        for (let i = 0; i <= index; i++) {
+            labels[i].querySelector('.fa-regular').classList.add('hidden');
+            labels[i].querySelector('.fa-solid').classList.remove('hidden');
+        }
+    });
+
+    //Mostro le stelle regular e nascondo le solid, a partire da destra fino al punto scelto
+    label.addEventListener('mouseleave', () => {
+        //Nel caso nessuna stella sia stata cliccata, la variabile di supporto non cambia
+        if (selectedIndex === -1) {
+            for (let i = 0; i < labels.length; i++) {
+                labels[i].querySelector('.fa-regular').classList.remove('hidden');
+                labels[i].querySelector('.fa-solid').classList.add('hidden');
+            }
+            //Nel caso invece una stella sia stata cliccata la variabile di supporto sarà uguale al suo indice
+        } else {
+            for (let i = selectedIndex + 1; i < labels.length; i++) {
+                labels[i].querySelector('.fa-regular').classList.remove('hidden');
+                labels[i].querySelector('.fa-solid').classList.add('hidden');
+            }
+        }
+    });
+
+    //Aggiungo il click
+    label.addEventListener('click', () => {
+        //Assegno il valore dell'indice della stella cliccata alla variabile di supporto
+        selectedIndex = index;
+
+        //Gestisco le stelle da sinistra fino ad arrivare a quella cliccata rendendole piene
+        for (let i = 0; i <= selectedIndex; i++) {
+            labels[i].querySelector('.fa-regular').classList.add('hidden');
+            labels[i].querySelector('.fa-solid').classList.remove('hidden');
+        }
+
+        //Gestisco tutte le stelle da quella successiva a quella cliccata fino alla più a destra rendendole regular
+        for (let i = selectedIndex + 1; i < labels.length; i++) {
+            labels[i].querySelector('.fa-regular').classList.add('hidden');
+            labels[i].querySelector('.fa-solid').classList.remove('hidden');
+        }
+    })
+
+});
 }
 
 </script>
@@ -91,11 +161,32 @@ function get_lat_and_lng(coords) {
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="$2999">
                         </div>
-                        <div class="d-flex items-center">
-                            <input id="checked" type="checkbox" value="true" v-model="form.checked"
-                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
-                            <label for="checked" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Done!
-                                It's time for the next stop!</label>
+                        <div class="rating">
+                            <span>Rate your stop</span>
+                            <input type="radio" id="st-1" value="1" v-model="form.rating" name="star-radio" />
+                            <label for="st-1"><i class="fa-regular fa-star"></i><i
+                                    class="fa-solid fa-star hidden"></i></label>
+                            <input type="radio" id="st-2" value="2" v-model="form.rating" name="star-radio" />
+                            <label for="st-2"><i class="fa-regular fa-star"></i><i
+                                    class="fa-solid fa-star hidden"></i></label>
+                            <input type="radio" id="st-3" value="3" v-model="form.rating" name="star-radio" />
+                            <label for="st-3"><i class="fa-regular fa-star"></i><i
+                                    class="fa-solid fa-star hidden"></i></label>
+                            <input type="radio" id="st-4" value="4" v-model="form.rating" name="star-radio" />
+                            <label for="st-4"><i class="fa-regular fa-star"></i><i
+                                    class="fa-solid fa-star hidden"></i></label>
+                            <input type="radio" id="st-5" value="5" v-model="form.rating" name="star-radio" />
+                            <label for="st-5"><i class="fa-regular fa-star"></i><i
+                                    class="fa-solid fa-star hidden"></i></label>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="status"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                            <select v-model="form.status" id="status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option selected="">Select status</option>
+                                <option v-for="status in statuses" :value="status.id">{{ status.title }}</option>
+                            </select>
                         </div>
                         <div class="d-flex items-center">
                             <input id="public" type="checkbox" value="true" v-model="form.public"
@@ -103,7 +194,7 @@ function get_lat_and_lng(coords) {
                             <label for="public" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Do you
                                 want make this Stop Public?</label>
                         </div>
-                        <button :disabled="form.processing" type="submit" data-modal-hide="new-stop-modal"
+                        <button type="submit" data-modal-hide="new-stop-modal"
                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
                     </form>
                 </div>
@@ -113,3 +204,16 @@ function get_lat_and_lng(coords) {
 
 
 </template>
+<style>
+input[type=radio] {
+    position: fixed;
+    opacity: 0;
+    left: -90000px;
+}
+
+
+.fa-star {
+    color: rgb(178, 152, 4);
+}
+
+</style>

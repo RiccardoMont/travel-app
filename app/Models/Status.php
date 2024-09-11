@@ -19,5 +19,9 @@ class Status extends Model
         return $this->hasMany(Trip::class);
 
     }
+    public function stops(): HasMany
+    {
+        return $this->hasMany(Stop::class);
+    }
     
 }
