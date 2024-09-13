@@ -23,15 +23,16 @@ class StoreStopRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'image|max:2048|nullable',
             'description' => 'nullable',
-            'price' => 'nullable|integer',
-            'rating' =>  'nullable|integer',
-            'lat' => 'nullable|numeric|min:-90|max:90',
-            'lng' => 'nullable|numeric|min:-180|max:180',
-            'datetime' => 'required|date_format:Y-m-d\TH:i',
-            'checked' => 'nullable',
-            'public' => 'nullable',
+            'price' => 'integer|nullable',
+            'rating' =>  'integer|nullable',
+            'lat' => 'numeric|min:-90|max:90|nullable',
+            'lng' => 'numeric|min:-180|max:180|nullable',
+            'date_and_hour' => 'required|date_format:Y-m-d\TH:i',
+            'public' => 'boolean|nullable',
+            'trip_id' => 'exists:trips,id|nullable',
+            'status_id' => 'exists:statuses,id|nullable'
         ];
     }
 }

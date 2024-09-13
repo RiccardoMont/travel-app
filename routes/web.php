@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Laravel non supporta il caricamento delle immagini tramite il metodo put/patch e sfrutto quindi il metodo POST sulla rotta dell'update. La dichiaro prima in modo da privilegiare questa rotta e non quella creata con il resource.
     Route::post('trips/{trip}', [TripController::class, 'update']);
+    Route::post('stops/{stop}', [StopController::class, 'update']);
 
     Route::resource('trips', TripController::class);
 

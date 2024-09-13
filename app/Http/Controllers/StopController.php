@@ -54,13 +54,16 @@ class StopController extends Controller
 
         //Segna errore ma in realtà riesce a prenderlo
         $validated['user_id'] = auth()->id();
-        $validated['trip_id'] = $request->trip_id;
-        $validated['status_id'] = $request->status;
+
+        //Aggiungo ":00" per i secondi, in modo che postgres non abbia problemi nell'inserire il dato nella colonna
+        $validated['date_and_hour'] = date('Y-m-d H:i:s', strtotime($request->date_and_hour . ':00'));
+
+        //$validated['trip_id'] = $request->trip_id;
+        //$validated['status_id'] = $request->status;
 
         $stop = Stop::create($validated);
 
         return to_route('trips.show', ['trip' => $trip_id]);
-
     }
 
     /**
@@ -84,7 +87,8 @@ class StopController extends Controller
      */
     public function update(UpdateStopRequest $request, Stop $stop)
     {
-        //
+
+        dd($request->all());
     }
 
     /**

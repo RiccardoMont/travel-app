@@ -83,10 +83,16 @@ class TripController extends Controller
 
         $statuses = Status::all();
 
-        $stops = Stop::where('trip_id', '=', $trip->id)->get();
+        $stops = Stop::orderByDesc('id')->where('trip_id', '=', $trip->id)->get();
 
-        return Inertia::render('trips/show', compact('trip', 'statuses', 'stops'));
+        //return Inertia::render('trips/show', compact('trip', 'statuses', 'stops'));
 
+        return Inertia::render('trips/show', [
+            'trip' => $trip,
+            'statuses' => $statuses,
+            'stops' => $stops,
+            'old' => old()
+        ]);
     }
 
     /**

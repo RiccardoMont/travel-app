@@ -10,7 +10,7 @@ class Stop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'description', 'rating', 'lat', 'lng', 'date_and_hour', 'checked', 'user_id', 'trip_id', 'status_id'];
+    protected $fillable = ['title', 'image', 'description', 'price', 'rating', 'lat', 'lng', 'date_and_hour', 'public', 'user_id', 'trip_id', 'status_id'];
 
     public function trip() : BelongsTo
     {

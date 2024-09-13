@@ -10,26 +10,27 @@ onMounted(() => {
 
 const props = defineProps({
     trip: Object,
-    statuses: Array,
+    statuses: Object,
     old: Object
 });
 
 
 const form = useForm({
-    title: props.old.title || props.trip.title ||'',
+    title: props.old.title || props.trip.title || '',
     image: '',
-    start: props.old.start || props.trip.start ||'',
-    end: props.old.end || props.trip.end ||'',
-    price: props.old.price || props.trip.price ||'',
-    status: props.old.status || props.trip.status ||'',
-    description: props.old.description || props.trip.description ||'',
-    public: props.old.public || props.trip.public ||''
+    start: props.old.start || props.trip.start || '',
+    end: props.old.end || props.trip.end || '',
+    price: props.old.price || props.trip.price || '',
+    status: props.old.status || props.trip.status || '',
+    description: props.old.description || props.trip.description || '',
+    public: props.old.public || props.trip.public || ''
 });
 
 
 </script>
 <template>
-
+    <i :data-modal-target="'edit-trip-modal-' + trip.id" :data-modal-toggle="'edit-trip-modal-' + trip.id" type="button"
+        class="fa-solid fa-pencil px-2"></i>
 
     <!-- Main modal -->
     <div :id="'edit-trip-modal-' + trip.id" tabindex="-1" aria-hidden="true"
@@ -54,31 +55,31 @@ const form = useForm({
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form @submit.prevent="form.post(route('trips.update', trip.id))" method="post" class="p-4 md:p-5" enctype="multipart/form-data">
+                <form @submit.prevent="form.post(route('trips.update', trip.id))" method="post" class="p-4 md:p-5"
+                    enctype="multipart/form-data">
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="title"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                             <input v-model="form.title" type="text" name="title" id="title"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                >
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         </div>
                         <div class="col-span-2">
                             <label for="image"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover
                                 Image</label>
                             <input type="file" @input="form.image = $event.target.files[0]" name="image" id="image"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"/>
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="start">Start date:</label>
                             <input type="date" id="start" name="trip-start" v-model="form.start" min="2001-01-01"
-                                max="2039-12-31"/>
+                                max="2039-12-31" />
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="end">End date:</label>
                             <input type="date" id="end" name="trip-end" v-model="form.end" :min="form.start"
-                                max="2040-12-31"/>
+                                max="2040-12-31" />
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"

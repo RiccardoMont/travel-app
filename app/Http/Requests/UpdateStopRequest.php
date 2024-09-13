@@ -11,7 +11,7 @@ class UpdateStopRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateStopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required',
+            'image' => 'image|max:2048|nullable',
+            'description' => 'nullable',
+            'price' => 'integer|nullable',
+            'rating' =>  'integer|nullable',
+            'lat' => 'numeric|min:-90|max:90|nullable',
+            'lng' => 'numeric|min:-180|max:180|nullable',
+            'date_and_hour' => 'required|date_format:Y-m-d\TH:i',
+            'public' => 'boolean|nullable',
+            'trip_id' => 'exists:trips,id|nullable',
+            'status_id' => 'exists:statuses,id|nullable'
         ];
     }
 }

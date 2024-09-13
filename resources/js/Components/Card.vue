@@ -2,7 +2,6 @@
 
 const props = defineProps({
     stop_trip: Object
-
 })
 
 </script>
